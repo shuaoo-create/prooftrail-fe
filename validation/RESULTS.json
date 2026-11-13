@@ -1,0 +1,104 @@
+{
+  "verified_at_utc": "2026-11-13T18:40:37.950927+00:00",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "compiler_version": "fe 26.6.0 (5b3f96a)",
+  "official_installation_reference": "https://fe-lang.org/getting-started/installation/",
+  "release_binary_url": "https://github.com/argotorg/fe/releases/download/v26.6.0/fe_linux_amd64",
+  "compiler_binary_sha256": "697081cb9265bd1be7a5d33e6bb0c8559ee5ff542abab9a046540fc151b4edaa",
+  "installer_sha256": "b2dffd2d9d5b1a07d18e9321f57ab08442cc50df4a6004ee2fb538963812ee78",
+  "restored_original_archive_sha256": "9090e83779e68d8a05177d4ea66a6e66a14f6c09a475cb93c65d2f704d830245",
+  "source_changes": "Official formatter only; original contract behavior and seven tests retained. Updated version pin, documentation and validation evidence.",
+  "commands": [
+    {
+      "name": "fe-version",
+      "command": [
+        "/workspace/scratch/fe_continue/toolchain/bin/fe",
+        "--version"
+      ],
+      "cwd": "/workspace/scratch/fe_continue/restored/prooftrail_fe",
+      "started_utc": "2026-11-13T18:40:33.729742+00:00",
+      "completed_utc": "2026-11-13T18:40:33.743140+00:00",
+      "exit_code": 0,
+      "log": "validation/fe-version.log"
+    },
+    {
+      "name": "fe-fmt-check",
+      "command": [
+        "/workspace/scratch/fe_continue/toolchain/bin/fe",
+        "fmt",
+        "--check"
+      ],
+      "cwd": "/workspace/scratch/fe_continue/restored/prooftrail_fe",
+      "started_utc": "2026-11-13T18:40:33.743165+00:00",
+      "completed_utc": "2026-11-13T18:40:33.751777+00:00",
+      "exit_code": 0,
+      "log": "validation/fe-fmt-check.log"
+    },
+    {
+      "name": "fe-check",
+      "command": [
+        "/workspace/scratch/fe_continue/toolchain/bin/fe",
+        "check"
+      ],
+      "cwd": "/workspace/scratch/fe_continue/restored/prooftrail_fe",
+      "started_utc": "2026-11-13T18:40:33.751795+00:00",
+      "completed_utc": "2026-11-13T18:40:34.616814+00:00",
+      "exit_code": 0,
+      "log": "validation/fe-check.log"
+    },
+    {
+      "name": "fe-test",
+      "command": [
+        "/workspace/scratch/fe_continue/toolchain/bin/fe",
+        "test"
+      ],
+      "cwd": "/workspace/scratch/fe_continue/restored/prooftrail_fe",
+      "started_utc": "2026-11-13T18:40:34.616841+00:00",
+      "completed_utc": "2026-11-13T18:40:36.289028+00:00",
+      "exit_code": 0,
+      "log": "validation/fe-test.log"
+    },
+    {
+      "name": "fe-build",
+      "command": [
+        "/workspace/scratch/fe_continue/toolchain/bin/fe",
+        "build"
+      ],
+      "cwd": "/workspace/scratch/fe_continue/restored/prooftrail_fe",
+      "started_utc": "2026-11-13T18:40:36.289059+00:00",
+      "completed_utc": "2026-11-13T18:40:37.790358+00:00",
+      "exit_code": 0,
+      "log": "validation/fe-build.log"
+    },
+    {
+      "name": "python-tests",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "cwd": "/workspace/scratch/fe_continue/restored/prooftrail_fe",
+      "started_utc": "2026-11-13T18:40:37.790382+00:00",
+      "completed_utc": "2026-11-13T18:40:37.950902+00:00",
+      "exit_code": 0,
+      "log": "validation/python-tests.log"
+    }
+  ],
+  "fe_tests_passed": 7,
+  "python_tests_passed": 5,
+  "registered": true,
+  "submitted": false,
+  "public_repo_created": false,
+  "new_paid_services_used": false,
+  "registration_status": "REGISTERED_CONFIRMED_FE056",
+  "project_id": "FE-056",
+  "registration_confirmed_utc": "2026-11-13T18:41:48Z",
+  "registration_evidence": "Organizer original Gmail message verified by root; subject Fe Builders Challenge \u2014 REGISTERED.",
+  "administrative_update_only": true,
+  "code_retested_for_administrative_update": false,
+  "evidence_note": "Historical local validation captured on 2026-11-13; command paths refer to that validation environment."
+}

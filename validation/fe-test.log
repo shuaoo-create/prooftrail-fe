@@ -1,0 +1,9 @@
+PASS  [0.0022s] reject_zero_digest
+PASS  [0.0032s] reject_unknown_ai_mode
+PASS  [0.0035s] cannot_freeze_empty_history
+PASS  [0.0035s] first_commit_has_version_one
+PASS  [0.0038s] finalization_marks_author
+PASS  [0.0024s] revisions_remain_readable
+PASS  [0.0042s] cannot_commit_after_finalization
+
+test result: ok. 7 passed; 0 failed

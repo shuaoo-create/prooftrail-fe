@@ -1,0 +1,100 @@
+{
+  "files": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "bytes": 651,
+      "sha256": "cd7e25bedc39b27e3ab3686d8d562bdf0fd32cf294ca999a68b4f3b45f44454d"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 74,
+      "sha256": "28a6a0428d2acc1463734a3033cfa9bc9fb0d002cee6296a7cc659ccfc5bc692"
+    },
+    {
+      "path": "DISCLOSURE.md",
+      "bytes": 1179,
+      "sha256": "d54a9bce15ea9947404a8018defcda88c2d2dfa747f5ae73e155a2763dd9e329"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 1065,
+      "sha256": "8ffb228facccaa4904784de175d74dd3fa470f74affcb8334e1b9b8052dbecca"
+    },
+    {
+      "path": "README.md",
+      "bytes": 5752,
+      "sha256": "f7a908212a600db27092542526db4469c80baad805910e20d8b0d2e2248058a0"
+    },
+    {
+      "path": "fe.toml",
+      "bytes": 46,
+      "sha256": "2e2dc0b7633b66086bbcdfdad2b37cbe8fe6cc74ce48ab1f3b0428fd54ba50b4"
+    },
+    {
+      "path": "fixtures/example.txt",
+      "bytes": 161,
+      "sha256": "f8385cb305bae8ba4c2671f2992817c0ddc05ac22ee042c06e20cc325aa2fc2a"
+    },
+    {
+      "path": "scripts/proof_digest.py",
+      "bytes": 900,
+      "sha256": "d1bc3f992928aee1c5e7eabb0ffe30f3f5b601ffff8507d8ed99a16a63cd6617"
+    },
+    {
+      "path": "src/lib.fe",
+      "bytes": 3033,
+      "sha256": "43f938a15536fb4f2dfbb850df9922ccfecc9e4acaefa24dbde64c096782fdc0"
+    },
+    {
+      "path": "src/tests.fe",
+      "bytes": 4465,
+      "sha256": "a8c6b7614f0f7681cde2eda6f3b13509639a3bcdfb5143c9df5cc56058ca0bfc"
+    },
+    {
+      "path": "tests/test_proof_digest.py",
+      "bytes": 876,
+      "sha256": "f5fcfd4227357a2751729362ca0baef3294a5f458fce531ccbfdda0b00ddd0ba"
+    },
+    {
+      "path": "validation/RESULTS.json",
+      "bytes": 3946,
+      "sha256": "0939c482d37568471b7cf13e1fbaa0843f0cd2327103ccf25c51a553864847d6"
+    },
+    {
+      "path": "validation/fe-build.log",
+      "bytes": 250,
+      "sha256": "e9a3f8f10bd3045a0f7752899991e66195bb541cb570f0329ecaf51d7df72695"
+    },
+    {
+      "path": "validation/fe-check.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "validation/fe-fmt-check.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "validation/fe-test.log",
+      "bytes": 333,
+      "sha256": "da01e509bf1298081828114f533a72b26e2a99d4fda3c4523030b17ebdde5df6"
+    },
+    {
+      "path": "validation/fe-version.log",
+      "bytes": 20,
+      "sha256": "ce7be79f326254b0ab71eaa0f3f8cc93c3bfe6ddbdf1e3e603eac8dcd5426a3e"
+    },
+    {
+      "path": "validation/fe-version.txt",
+      "bytes": 20,
+      "sha256": "ce7be79f326254b0ab71eaa0f3f8cc93c3bfe6ddbdf1e3e603eac8dcd5426a3e"
+    },
+    {
+      "path": "validation/python-tests.log",
+      "bytes": 493,
+      "sha256": "0ad78b593ce744c94651752e973e0410fce9366f00a426f2421488b03d85d34f"
+    }
+  ],
+  "scope": "Public source and historical local validation; excludes private registration and generated build output."
+}

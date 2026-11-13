@@ -1,0 +1,10 @@
+test_content_change (test_proof_digest.DigestTests.test_content_change) ... ok
+test_empty_rejected (test_proof_digest.DigestTests.test_empty_rejected) ... ok
+test_repeatable (test_proof_digest.DigestTests.test_repeatable) ... ok
+test_salt_change (test_proof_digest.DigestTests.test_salt_change) ... ok
+test_wrong_length_rejected (test_proof_digest.DigestTests.test_wrong_length_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.000s
+
+OK

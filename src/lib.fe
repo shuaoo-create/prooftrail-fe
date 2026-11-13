@@ -1,0 +1,95 @@
+// ProofTrail: writer-controlled, versioned disclosure commitments.
+// Commitments are content hashes, not proofs of authorship or AI usage.
+// Prototype only; not audited or production-ready.
+
+use std::evm::StorageMap
+
+msg TrailMsg {
+    #[selector = sol("commit(uint256,uint256)")]
+    Commit { digest: u256, ai_mode: u256 } -> u256,
+    #[selector = sol("freeze()")]
+    Freeze -> u256,
+    #[selector = sol("versionOf(address)")]
+    VersionOf { author: Address } -> u256,
+    #[selector = sol("digestAt(address,uint256)")]
+    DigestAt { author: Address, version: u256 } -> u256,
+    #[selector = sol("modeAt(address,uint256)")]
+    ModeAt { author: Address, version: u256 } -> u256,
+    #[selector = sol("isFrozen(address)")]
+    IsFrozen { author: Address } -> bool,
+}
+
+#[event]
+struct ProofCommitted {
+    #[indexed]
+    author: Address,
+    version: u256,
+    digest: u256,
+    ai_mode: u256,
+}
+
+#[event]
+struct ProofFinalized {
+    #[indexed]
+    author: Address,
+    version: u256,
+}
+
+pub contract ProofTrail uses (ctx: Ctx, log: mut Log) {
+    mut versions: StorageMap<Address, u256>,
+    mut digests: StorageMap<(Address, u256), u256>,
+    mut modes: StorageMap<(Address, u256), u256>,
+    mut frozen: StorageMap<Address, bool>,
+
+    recv TrailMsg {
+        Commit { digest, ai_mode } -> u256 uses (
+            ctx,
+            mut versions,
+            mut digests,
+            mut modes,
+            frozen,
+            mut log,
+        ) {
+            let author = ctx.caller()
+            assert!(!frozen.get(key: author), "This author has finalized")
+            assert!(digest != 0, "Zero digest is not a commitment")
+            // 0 = none declared, 1 = assisted, 2 = AI-led.
+            assert!(ai_mode <= 2, "Unknown disclosure mode")
+
+            let new_version = versions.get(key: author) + 1
+            digests.set(key: (author, new_version), value: digest)
+            modes.set(key: (author, new_version), value: ai_mode)
+            versions.set(key: author, value: new_version)
+            log.emit(
+                ProofCommitted { author, version: new_version, digest, ai_mode },
+            )
+            new_version
+        }
+
+        Freeze -> u256 uses (ctx, versions, mut frozen, mut log) {
+            let author = ctx.caller()
+            let version = versions.get(key: author)
+            assert!(version > 0, "No commitment to finalize")
+            assert!(!frozen.get(key: author), "Already finalized")
+            frozen.set(key: author, value: true)
+            log.emit(ProofFinalized { author, version })
+            version
+        }
+
+        VersionOf { author } -> u256 uses (versions) {
+            versions.get(key: author)
+        }
+
+        DigestAt { author, version } -> u256 uses (digests) {
+            digests.get(key: (author, version))
+        }
+
+        ModeAt { author, version } -> u256 uses (modes) {
+            modes.get(key: (author, version))
+        }
+
+        IsFrozen { author } -> bool uses (frozen) {
+            frozen.get(key: author)
+        }
+    }
+}

@@ -1,0 +1,156 @@
+use ingot::{ProofTrail, TrailMsg}
+
+#[test]
+fn first_commit_has_version_one() uses (evm: mut Evm) {
+    let trail = evm.create2<ProofTrail>(value: Wei::zero(), args: (), salt: 0)
+    let version: u256 = evm
+        .call(
+            addr: trail,
+            gas: 500000,
+            value: Wei::zero(),
+            message: TrailMsg::Commit { digest: 0x123456, ai_mode: 2 },
+        )
+    assert!(version == 1)
+    let found: u256 = evm
+        .call(
+            addr: trail,
+            gas: 200000,
+            value: Wei::zero(),
+            message: TrailMsg::DigestAt { author: evm.address(), version: 1 },
+        )
+    assert!(found == 0x123456)
+    let mode: u256 = evm
+        .call(
+            addr: trail,
+            gas: 200000,
+            value: Wei::zero(),
+            message: TrailMsg::ModeAt { author: evm.address(), version: 1 },
+        )
+    assert!(mode == 2)
+}
+
+#[test]
+fn revisions_remain_readable() uses (evm: mut Evm) {
+    let trail = evm.create2<ProofTrail>(value: Wei::zero(), args: (), salt: 0)
+    let _: u256 = evm
+        .call(
+            addr: trail,
+            gas: 500000,
+            value: Wei::zero(),
+            message: TrailMsg::Commit { digest: 111, ai_mode: 1 },
+        )
+    let second: u256 = evm
+        .call(
+            addr: trail,
+            gas: 500000,
+            value: Wei::zero(),
+            message: TrailMsg::Commit { digest: 222, ai_mode: 2 },
+        )
+    assert!(second == 2)
+    let first_hash: u256 = evm
+        .call(
+            addr: trail,
+            gas: 200000,
+            value: Wei::zero(),
+            message: TrailMsg::DigestAt { author: evm.address(), version: 1 },
+        )
+    assert!(first_hash == 111)
+    let second_hash: u256 = evm
+        .call(
+            addr: trail,
+            gas: 200000,
+            value: Wei::zero(),
+            message: TrailMsg::DigestAt { author: evm.address(), version: 2 },
+        )
+    assert!(second_hash == 222)
+}
+
+#[test]
+fn finalization_marks_author() uses (evm: mut Evm) {
+    let trail = evm.create2<ProofTrail>(value: Wei::zero(), args: (), salt: 0)
+    let _: u256 = evm
+        .call(
+            addr: trail,
+            gas: 500000,
+            value: Wei::zero(),
+            message: TrailMsg::Commit { digest: 987, ai_mode: 1 },
+        )
+    let last: u256 = evm
+        .call(
+            addr: trail,
+            gas: 500000,
+            value: Wei::zero(),
+            message: TrailMsg::Freeze {},
+        )
+    assert!(last == 1)
+    let stopped: bool = evm
+        .call(
+            addr: trail,
+            gas: 200000,
+            value: Wei::zero(),
+            message: TrailMsg::IsFrozen { author: evm.address() },
+        )
+    assert!(stopped)
+}
+
+#[test(should_revert)]
+fn reject_zero_digest() uses (evm: mut Evm) {
+    let trail = evm.create2<ProofTrail>(value: Wei::zero(), args: (), salt: 0)
+    let _: u256 = evm
+        .call(
+            addr: trail,
+            gas: 500000,
+            value: Wei::zero(),
+            message: TrailMsg::Commit { digest: 0, ai_mode: 1 },
+        )
+}
+
+#[test(should_revert)]
+fn reject_unknown_ai_mode() uses (evm: mut Evm) {
+    let trail = evm.create2<ProofTrail>(value: Wei::zero(), args: (), salt: 0)
+    let _: u256 = evm
+        .call(
+            addr: trail,
+            gas: 500000,
+            value: Wei::zero(),
+            message: TrailMsg::Commit { digest: 987, ai_mode: 3 },
+        )
+}
+
+#[test(should_revert)]
+fn cannot_freeze_empty_history() uses (evm: mut Evm) {
+    let trail = evm.create2<ProofTrail>(value: Wei::zero(), args: (), salt: 0)
+    let _: u256 = evm
+        .call(
+            addr: trail,
+            gas: 500000,
+            value: Wei::zero(),
+            message: TrailMsg::Freeze {},
+        )
+}
+
+#[test(should_revert)]
+fn cannot_commit_after_finalization() uses (evm: mut Evm) {
+    let trail = evm.create2<ProofTrail>(value: Wei::zero(), args: (), salt: 0)
+    let _: u256 = evm
+        .call(
+            addr: trail,
+            gas: 500000,
+            value: Wei::zero(),
+            message: TrailMsg::Commit { digest: 987, ai_mode: 1 },
+        )
+    let _: u256 = evm
+        .call(
+            addr: trail,
+            gas: 500000,
+            value: Wei::zero(),
+            message: TrailMsg::Freeze {},
+        )
+    let _: u256 = evm
+        .call(
+            addr: trail,
+            gas: 500000,
+            value: Wei::zero(),
+            message: TrailMsg::Commit { digest: 988, ai_mode: 2 },
+        )
+}
